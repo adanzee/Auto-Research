@@ -1,0 +1,6 @@
+.jetro
+daemon
+.vscode
+venv
+.env
+.env.example

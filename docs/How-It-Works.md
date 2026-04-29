@@ -48,7 +48,7 @@ After the Synthesis Agent calculates the confidence score, if the research does 
 
 ## What the Human Review Actually Controls
 
-The HITL checkpoint is not a formality. The human sees exactly what the agents found — including contradictions and low-confidence facts. Approving means the human takes responsibility for the quality of the final report. Rejecting sends the agents back to research again. Editing lets the human reshape the report structure before it is written. This makes the output trustworthy rather than blindly automated.
+The HITL (Human-In-The-Loop) checkpoint is not a formality. The human sees exactly what the agents found — including contradictions and low-confidence facts. Approving means the human takes responsibility for the quality of the final report. Rejecting sends the agents back to research again. Editing lets the human reshape the report structure before it is written. This makes the output trustworthy rather than blindly automated.
 
 ---
 
