@@ -4,3 +4,10 @@ daemon
 venv
 .env
 .env.example
+.agent
+.cursor
+.github
+.mcp.json
+.windsurfrules
+AGENT.md
+Claude.md
