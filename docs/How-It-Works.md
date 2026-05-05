@@ -1,8 +1,6 @@
 # How AutoResearch Works
 
-## The Big Picture
 
-A user submits a research topic. The system spins up a pipeline of AI agents that search the web, read sources, extract facts, validate them, and produce a structured PDF report. Before the final report is generated, a human must review and approve the research — this is the trust layer.
 
 ---
 
