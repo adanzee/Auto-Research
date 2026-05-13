@@ -168,3 +168,4 @@ Report   →  generates markdown + PDF
       ↓
 Done
 ```
+📌 Have to add some new agentic concept in order to make the flow better
