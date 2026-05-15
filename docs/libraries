@@ -1,0 +1,177 @@
+# Python Libraries (Quick Reference)
+
+numpy: numerical computing library
+
+fastapi: modern high-performance web framework for APIs
+
+starlette: ASGI toolkit used by FastAPI
+
+uvicorn: ASGI server for running FastAPI apps
+
+gunicorn: production server process manager
+
+sqlalchemy: ORM for database operations
+
+asyncpg: async PostgreSQL driver
+
+psycopg2-binary: sync PostgreSQL driver
+
+alembic: database migration tool
+
+pgvector: PostgreSQL vector similarity search extension
+
+redis: in-memory cache and message broker
+
+fastapi-limiter: API rate limiting using Redis
+
+python-jose: JWT token encode/decode
+
+passlib: password hashing library
+
+bcrypt: password hashing algorithm
+
+python-multipart: form-data parser for FastAPI
+
+email-validator: email format validation
+
+httpx: async HTTP client
+
+requests: synchronous HTTP client
+
+urllib3: low-level HTTP library
+
+idna: international domain name support
+
+certifi: SSL certificate bundle
+
+google-generativeai: Gemini AI API client
+
+google-ai-generativelanguage: core Gemini API layer
+
+langchain: LLM application framework
+
+langgraph: LLM workflow/agent graphs
+
+langsmith: LLM tracing and debugging tool
+
+tiktoken: token counting for LLMs
+
+tavily-python: AI web search API
+
+pydantic: data validation library
+
+pydantic-settings: environment config management
+
+annotated-types: typing utilities
+
+celery: distributed task queue
+
+kombu: messaging library for Celery
+
+amqp: messaging protocol support
+
+billiard: multiprocessing backend for Celery
+
+vine: Celery async helper library
+
+flower: Celery monitoring dashboard
+
+strawberry-graphql: GraphQL API framework
+
+graphql-core: GraphQL engine core
+
+jinja2: HTML templating engine
+
+markdown: markdown to HTML converter
+
+weasyprint: HTML to PDF converter
+
+pygments: code syntax highlighting
+
+beautifulsoup4: HTML parsing library
+
+lxml: fast XML/HTML parser
+
+structlog: structured logging library
+
+humanize: human-readable formatting utilities
+
+tenacity: retry mechanism for APIs
+
+tqdm: progress bar library
+
+regex: advanced regex engine
+
+orjson: fast JSON serialization
+
+msgpack: binary serialization format
+
+pytest: testing framework
+
+pytest-asyncio: async test support
+
+pytest-cov: test coverage tool
+
+coverage: code coverage reporting
+
+click: CLI framework
+
+anyio: async compatibility layer
+
+h11: HTTP protocol implementation
+
+websockets: WebSocket support
+
+watchfiles: file change watcher
+
+colorama: terminal color formatting
+
+wcwidth: terminal width calculation
+
+prompt_toolkit: interactive CLI input
+
+cryptography: encryption library
+
+cffi: C interface for Python
+
+pycparser: C parser for crypto libs
+
+ecdsa: elliptic curve cryptography
+
+rsa: RSA encryption
+
+protobuf: protocol buffers serialization
+
+grpcio: gRPC communication library
+
+httplib2: HTTP client for Google APIs
+
+uritemplate: URL template handling
+
+brotli: compression library
+
+zstandard: fast compression library
+
+zopfli: high compression algorithm
+
+charset-normalizer: encoding detection
+
+soupsieve: CSS selector engine
+
+webencodings: web encoding utilities
+
+cssselect2: CSS selector parsing
+
+fonttools: font manipulation library
+
+pyphen: hyphenation library
+
+pillow: image processing library
+
+packaging: version handling utilities
+
+six: Python compatibility helper
+
+xxhash: fast hashing algorithm
+
+uuid-utils: UUID utilities
