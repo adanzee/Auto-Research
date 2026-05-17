@@ -1,8 +1,101 @@
-# How AutoResearch Works
+# AutoResearch — Agentic System Overview
 
-## The Big Picture
+## What Is This?
 
-A user submits a research topic. The system spins up a pipeline of AI agents that search the web, read sources, extract facts, validate them, and produce a structured PDF report. Before the final report is generated, a human must review and approve the research — this is the trust layer.
+AutoResearch is an **agentic pipeline** — a network of autonomous AI agents that each own a specific task, make decisions independently, and hand off results to the next agent. The system handles a full research cycle end-to-end, from raw topic to formatted PDF, with a human checkpoint before final output.
+
+---
+
+## The Agent Network
+
+### 1. Planner Agent
+Receives the research topic and decomposes it into **6–10 focused sub-questions**, covering definition, history, current state, challenges, future outlook, and controversies. Every downstream agent operates from these sub-questions.
+
+### 2. Search Agent
+Runs in **parallel** across all sub-questions. For each one, it generates targeted search queries, hits the Tavily API, retrieves relevant URLs, and filters out low-relevance results autonomously.
+
+### 3. Scraper Agent
+Visits each URL and extracts clean, readable text — stripping ads, nav, and boilerplate. Failed or timed-out URLs are logged and skipped. The agent never blocks the pipeline on a single bad source.
+
+### 4. Extraction Agent
+Reads each scraped page and pulls out facts relevant to the sub-question that sourced it. Each fact is assigned an initial credibility score for the next agent to evaluate.
+
+### 5. Validation Agent
+Cross-checks all extracted facts across every source. It scores each fact by source quality, recency, and corroboration. **Conflicting claims are flagged as contradictions.** This is the agent that separates the system from a basic summarizer — it does not blindly trust any single source.
+
+### 6. Synthesis Agent
+Reviews all validated facts and builds a **structured report outline** organised by theme. It calculates an overall confidence score. If confidence is too low or a major section lacks supporting facts, it signals the pipeline to loop back to the Planner — up to **two times** before forcing forward progress.
+
+### 7. Report Agent
+Activated only after human approval. Generates the final report in Markdown with **inline citations** on every factual claim, then converts it to a PDF with a table of contents, page numbers, source credibility scores, and a limitations section disclosing AI assistance.
+
+---
+
+## Human-in-the-Loop (HITL) Checkpoint
+
+The pipeline **pauses** before report generation. This is not a formality.
+
+The human reviewer sees:
+- The report outline
+- The overall confidence score
+- All detected contradictions
+- A sample of the strongest and weakest facts
+
+**Three choices are available:**
+
+| Action | What happens |
+|--------|--------------|
+| **Approve** | Pipeline continues to the Report Agent. The human takes responsibility for output quality. |
+| **Reject** | Agents loop back and re-research with the rejection feedback in context. |
+| **Edit** | Human reshapes the outline with specific instructions before report generation begins. |
+
+---
+
+## Agent Loop — Quality Control
+
+After the Synthesis Agent scores the research:
+
+- If quality is **below threshold** → loop back to Planner Agent (aware of what was missing)
+- This loop can happen **at most twice**
+- After two iterations, the pipeline always proceeds to HITL regardless of score
+
+---
+
+## Pipeline Flow
+
+```
+User submits topic
+        ↓
+Planner Agent      — breaks topic into sub-questions
+        ↓
+Search Agent       — finds relevant URLs (runs in parallel)
+        ↓
+Scraper Agent      — extracts clean text from each URL
+        ↓
+Extraction Agent   — pulls facts per page
+        ↓
+Validation Agent   — scores and cross-checks every fact
+        ↓
+Synthesis Agent    — builds outline, checks quality
+        ↓  ↑ loops back if quality too low (max 2×)
+HITL Checkpoint    — human reviews and approves / rejects / edits
+        ↓  ↑ loops back if human rejects
+Report Agent       — generates Markdown + PDF
+        ↓
+Report delivered
+```
+
+---
+
+## Key Agentic Properties
+
+- **Autonomy** — each agent acts independently within its scope, no manual hand-holding between steps
+- **Parallelism** — the Search Agent fans out across all sub-questions simultaneously
+- **Self-correction** — the Synthesis Agent can trigger re-runs when quality falls short
+- **Graceful degradation** — failed sources are skipped; the pipeline never halts on partial failures
+- **Human oversight** — the HITL checkpoint ensures a human is accountable for every output before it ships# How AutoResearch Works
+
+
 
 ---
 
@@ -75,3 +168,4 @@ Report   →  generates markdown + PDF
       ↓
 Done
 ```
+📌 Have to add some new agentic concept in order to make the flow better
