@@ -4,11 +4,11 @@ daemon
 venv
 .env
 .env.example
-.agent
+.agents
 .cursor
 .github
 .mcp.json
 .windsurfrules
-AGENT.md
-Claude.md
-.db
+.env
+.env.local
+
