@@ -18,29 +18,30 @@ def synthesize_node(state: AgentState):
     pass
 
 def router_function(state: AgentState):
-    if state.validate_node == True:
-        return synthesize_node
-    elif state.validate_node == False and state.retry_count <= 3:
-        return search_node
-    elif state.validate_node == False and state.retry_count > 3:
-        return planner_node
+    if state["validate_result"] == True:
+        return "synthesize"
+    elif state["validate_result"] == False and state["retry_count"] <= 3:
+        return "search"
+    elif state["validate_result"] == False and state["retry_count"] > 3:
+        return "planner"
     else:   
         return END
     
-workflow.add_node(START, planner_node)
-workflow.add_node(planner_node, search_node)
-workflow.add_node(search_node, validate_node)
-workflow.add_node(validate_node, synthesize_node)
-workflow.add_node(synthesize_node, END)
-workflow.add_edge(START, planner_node)
-workflow.add_edge(planner_node, search_node)
-workflow.add_edge(search_node, validate_node)
-workflow.add_edge(validate_node, synthesize_node)
-workflow.add_conditional_edge(
-    validate_node, 
+
+workflow.add_node("planner", planner_node)
+workflow.add_node("search", search_node)
+workflow.add_node("validate", validate_node)
+workflow.add_node("synthesize", synthesize_node)
+
+workflow.add_edge(START, "planner")
+workflow.add_edge("planner", "search")
+workflow.add_edge("search", "validate")
+workflow.add_conditional_edges(
+    "validate", 
     router_function,{
-        True: synthesize_node,
-        False: search_node
+        "planner": "planner",
+        "synthesize": "synthesize",
+        "search": "search"
     }   
 )
 
