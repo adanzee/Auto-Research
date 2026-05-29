@@ -24,9 +24,9 @@ def synthesize_node(state: AgentState):
 def router_function(state: AgentState):
     if state["validate_result"]:
         return "synthesize"
-    elif state["validate_result"] and state["retry_count"] <= 3:
+    elif not state["validate_result"] and state["retry_count"] <= 3:
         return "search"
-    elif state["validate_result"] and state["retry_count"] > 3:
+    elif not state["validate_result"] and state["retry_count"] > 3:
         return "planner"
     else:
         return END
