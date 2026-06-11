@@ -43,6 +43,7 @@ def validate_search_result(state:AgentState):
                     "Coverage reporting workflow"
                 ]
                 }
+                
 
                 Scoring Guidelines:
                      90-100: Fully answers the query with relevant and sufficient information.
@@ -57,7 +58,7 @@ def validate_search_result(state:AgentState):
                 Search Result:
                 {search_result}
 
-  """)
+  """, template_format="jinja2")
     
     output_parser = JsonOutputParser()
     chain_prompt = prompt | llm | output_parser
