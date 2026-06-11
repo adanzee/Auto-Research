@@ -13,7 +13,6 @@ def create_research_plan(state: AgentState):
         model="openai/gpt-oss-120b:free",
         api_key=config.gpt_oss_key,
         temperature=0.4,
-        streaming = True,
     )
 
     out_parser = CommaSeparatedListOutputParser()
