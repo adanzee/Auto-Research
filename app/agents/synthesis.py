@@ -1,5 +1,6 @@
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
+from langchain_core.output_parsers import StrOutputParser
 import config
 from app.agents.state import AgentState
 
@@ -9,7 +10,7 @@ def synthesize_results(state:AgentState):
         model = "openai/gpt-oss-120b:free",
         api_key = config.gpt_oss_key,
         temperature = 0.4,
-        streaming = True
+        streaming = False
 
     )
 
@@ -114,3 +115,17 @@ def synthesize_results(state:AgentState):
         FINAL CONSOLIDATED ANSWER <A concise but complete answer that integrates all subquery findings into a single response to the original query>
 
 """)
+
+    final_output = StrOutputParser()
+
+    chain_prompt = prompt | llm | final_output
+    raw_results = state.get("search_result", {})
+    formatted_content = " "
+    for subquery, tooloutput in raw_results.items():
+        formatted_content += f"###SUBQUERY: {subquery}\n"
+        formatted_content += f"TOOL OUTPUT: {tooloutput}\n\n"
+
+    result = chain_prompt.invoke({"input_query": state["input_query"],
+                                   "search_results": state["search_result"]})
+    return {"final_answer": result}
+
