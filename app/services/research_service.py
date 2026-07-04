@@ -1,9 +1,35 @@
 from typing import Any
 
+import config
+
 
 class ResearchService:
     @staticmethod
     def run_research(query: str, max_retries: int = 1) -> dict[str, Any]:
+        if not query or not str(query).strip():
+            return {
+                "status": "error",
+                "query": "",
+                "report_text": None,
+                "final_answer": "",
+                "validation_status": False,
+                "retry_count": 0,
+                "subqueries": [],
+                "message": ["A non-empty query is required"],
+            }
+
+        if not config.gpt_oss_key or not config.exasearch_api_key:
+            return {
+                "status": "error",
+                "query": str(query).strip(),
+                "report_text": None,
+                "final_answer": "",
+                "validation_status": False,
+                "retry_count": 0,
+                "subqueries": [],
+                "message": ["Missing required API configuration for research execution"],
+            }
+
         from app.agents.planner import create_research_plan
         from app.agents.report import create_report
         from app.agents.search import perform_search

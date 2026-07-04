@@ -1,0 +1,59 @@
+version: '3.9'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: auto-research-api
+    ports:
+      - "8000:8000"
+    environment:
+      - GPT-OSS=${GPT-OSS}
+      - EXASEARCH_API_KEY=${EXASEARCH_API_KEY}
+    volumes:
+      - ./app:/app/app
+      - ./config.py:/app/config.py
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - research-network
+    depends_on:
+      - redis
+
+  worker:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.worker
+    container_name: auto-research-worker
+    environment:
+      - GPT-OSS=${GPT-OSS}
+      - EXASEARCH_API_KEY=${EXASEARCH_API_KEY}
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    volumes:
+      - ./app:/app/app
+      - ./config.py:/app/config.py
+    networks:
+      - research-network
+    depends_on:
+      - redis
+    deploy:
+      replicas: 1
+
+  redis:
+    image: redis:7-alpine
+    container_name: auto-research-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - research-network
+    command: redis-server --appendonly yes
+
+networks:
+  research-network:
+    driver: bridge
+
+volumes:
+  redis-data:
